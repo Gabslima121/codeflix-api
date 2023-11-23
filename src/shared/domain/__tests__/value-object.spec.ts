@@ -36,7 +36,7 @@ describe("ValueObject Unit Tests", () => {
 
   test("complex value object - should not have both values equal", () => {
     const vo1 = new ComplexValueObject("value", 2);
-    const vo2 = new ComplexValueObject("value", 1);
+    const vo2 = new ComplexValueObject("value2", 1);
 
     expect(vo1.equals(vo2)).toBeFalsy();
   });
