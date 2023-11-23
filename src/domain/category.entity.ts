@@ -57,3 +57,8 @@ export class Category {
     };
   }
 }
+
+/**
+ * Objetos de valor :
+ * imutavel e livre de efeitos colaterais
+ */
