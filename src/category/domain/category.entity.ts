@@ -1,4 +1,5 @@
 import { Uuid } from "../../shared/domain/value-objects/uuid.vo";
+import { CategoryValidatorFactory } from "./category.validator";
 
 export type CategoryConstructorProps = {
   category_id?: Uuid;
@@ -49,6 +50,12 @@ export class Category {
     this.is_active = false;
   }
 
+  static validate(entity: Category) {
+    const validator = CategoryValidatorFactory.create();
+
+    return validator.validate(entity);
+  }
+
   toJSON() {
     return {
       category_id: this.category_id.id,
@@ -59,8 +66,3 @@ export class Category {
     };
   }
 }
-
-/**
- * Objetos de valor :
- * imutavel e livre de efeitos colaterais
- */
