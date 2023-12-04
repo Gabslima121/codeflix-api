@@ -187,7 +187,7 @@ describe("Category unit tests", () => {
   });
 
   describe("category validator", () => {
-    test("should an invalid category with name property", () => {
+    test("create category null name -> should an invalid category with name property", () => {
       expect(() => Category.create({ name: null })).containsErrorMessage({
         name: [
           "name should not be empty",
@@ -197,21 +197,55 @@ describe("Category unit tests", () => {
       });
     });
 
-    expect(() => Category.create({ name: "" })).containsErrorMessage({
-      name: ["name should not be empty"],
+    test("create category empty name -> should an invalid category with name property", () => {
+      expect(() => Category.create({ name: "" })).containsErrorMessage({
+        name: ["name should not be empty"],
+      });
     });
 
-    expect(() =>
-      Category.create({ name: "t".repeat(256) })
-    ).containsErrorMessage({
-      name: ["name must be shorter than or equal to 255 characters"],
+    test("create category long name -> should an invalid category with name property", () => {
+      expect(() =>
+        Category.create({ name: "t".repeat(256) })
+      ).containsErrorMessage({
+        name: ["name must be shorter than or equal to 255 characters"],
+      });
     });
 
-    expect(() => Category.create({ name: 5 as any })).containsErrorMessage({
-      name: [
-        "name must be a string",
-        "name must be shorter than or equal to 255 characters",
-      ],
+    test("create category number name -> should an invalid category with name property", () => {
+      expect(() => Category.create({ name: 5 as any })).containsErrorMessage({
+        name: [
+          "name must be a string",
+          "name must be shorter than or equal to 255 characters",
+        ],
+      });
+    });
+
+    test("create category null description -> should an invalid category with description property", () => {
+      expect(() =>
+        Category.create({ name: "Movie", description: null })
+      ).containsErrorMessage({
+        description: [
+          "description should not be empty",
+          "description must be a string",
+          "description must be shorter than or equal to 255 characters",
+        ],
+      });
+    });
+
+    test("create category number description -> should an invalid category with description property", () => {
+      expect(() =>
+        Category.create({ name: "Movie", description: 5 as any })
+      ).containsErrorMessage({
+        description: ["description must be a string"],
+      });
+    });
+
+    test("create category number is_active -> should an invalid category with is_active property", () => {
+      expect(() =>
+        Category.create({ name: "Movie", is_active: 5 as any })
+      ).containsErrorMessage({
+        is_active: ["is_active must be a boolean value"],
+      });
     });
   });
 });
