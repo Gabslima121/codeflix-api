@@ -247,5 +247,100 @@ describe("Category unit tests", () => {
         is_active: ["is_active must be a boolean value"],
       });
     });
+
+    test("changeName function -> should an invalid category with null name", () => {
+      const category = Category.create({
+        name: "Movie",
+      });
+
+      expect(category.name).toBe("Movie");
+
+      expect(() => category.changeName(null)).containsErrorMessage({
+        name: [
+          "name should not be empty",
+          "name must be a string",
+          "name must be shorter than or equal to 255 characters",
+        ],
+      });
+    });
+
+    test("changeName function -> should an invalid category with number name", () => {
+      const category = Category.create({
+        name: "Movie",
+      });
+
+      expect(category.name).toBe("Movie");
+
+      expect(() => category.changeName(5 as any)).containsErrorMessage({
+        name: [
+          "name must be a string",
+          "name must be shorter than or equal to 255 characters",
+        ],
+      });
+    });
+
+    test("changeName function -> should an invalid category with empty name", () => {
+      const category = Category.create({
+        name: "Movie",
+      });
+
+      expect(category.name).toBe("Movie");
+
+      expect(() => category.changeName("")).containsErrorMessage({
+        name: ["name should not be empty"],
+      });
+    });
+
+    test("changeName function -> should an invalid category with long name", () => {
+      const category = Category.create({
+        name: "Movie",
+      });
+
+      expect(category.name).toBe("Movie");
+
+      expect(() => category.changeName("t".repeat(256))).containsErrorMessage({
+        name: ["name must be shorter than or equal to 255 characters"],
+      });
+    });
+
+    test("changeDescription function -> should an invalid null description", () => {
+      const category = Category.create({
+        name: "Movie",
+      });
+
+      expect(category.name).toBe("Movie");
+
+      expect(() => category.changeDescription(null)).containsErrorMessage({
+        description: [
+          "description should not be empty",
+          "description must be a string",
+          "description must be shorter than or equal to 255 characters",
+        ],
+      });
+    });
+
+    test("changeDescription function -> should an invalid empty description", () => {
+      const category = Category.create({
+        name: "Movie",
+      });
+
+      expect(category.name).toBe("Movie");
+
+      expect(() => category.changeDescription("")).containsErrorMessage({
+        description: ["description should not be empty"],
+      });
+    });
+
+    test("changeDescription function -> should an invalid number description", () => {
+      const category = Category.create({
+        name: "Movie",
+      });
+
+      expect(category.name).toBe("Movie");
+
+      expect(() => category.changeDescription(5 as any)).containsErrorMessage({
+        description: ["description must be a string"],
+      });
+    });
   });
 });
