@@ -75,6 +75,8 @@ export abstract class InMemorySearchableRepository<
   extends InMemoryRepository<E, EntityId>
   implements ISearchableRepository<E, EntityId, Filter>
 {
+  sortableFields: string[] = [];
+
   async search(props: SearchParams<Filter>): Promise<SearchResult<E>> {
     const itemsFiltered = await this.applyFilter(this.items, props.filter);
 
@@ -142,6 +144,4 @@ export abstract class InMemorySearchableRepository<
       return 0;
     });
   }
-
-  sortableFields: string[] = [];
 }
