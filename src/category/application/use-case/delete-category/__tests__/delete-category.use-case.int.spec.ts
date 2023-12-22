@@ -9,7 +9,7 @@ import { CategorySequelizeRepository } from "../../../../infra/db/sequelize/cate
 import { CategoryModel } from "../../../../infra/db/sequelize/category.model";
 import { DeleteCategoryUseCase } from "../delete-category.use-case";
 
-describe("DeleteCategoryUseCase Unit Tests", () => {
+describe("DeleteCategoryUseCase Integration Tests", () => {
   let deleteCategoryUseCase: DeleteCategoryUseCase;
   let repository: CategorySequelizeRepository;
 
