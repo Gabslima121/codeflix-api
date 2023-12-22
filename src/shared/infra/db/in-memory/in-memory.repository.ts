@@ -61,7 +61,7 @@ export abstract class InMemoryRepository<
   protected _get(entity_id: EntityId) {
     const item = this.items.find((item) => item.entity_id.equals(entity_id));
 
-    return typeof item.entity_id === "undefined" ? null : item;
+    return typeof item === "undefined" ? null : item;
   }
 
   abstract getEntity(): new (...args: any[]) => E;
