@@ -3,7 +3,7 @@ import { NotFoundError } from "../../../../shared/domain/errors/not-found.error"
 import { Uuid } from "../../../../shared/domain/value-objects/uuid.vo";
 import { Category } from "../../../domain/category.entity";
 import { ICategoryRepository } from "../../../domain/category.repository";
-import { CreateCategoryOutput } from "../create-category/create-category.use-case";
+import { CategoryOutput } from "../common/category-output";
 
 export type UpdateCategoryInput = {
   id: string;
@@ -12,7 +12,7 @@ export type UpdateCategoryInput = {
   is_active?: boolean;
 };
 
-export type UpdateCategoryOutput = CreateCategoryOutput;
+export type UpdateCategoryOutput = CategoryOutput;
 
 export class UpdateCategoryUseCase
   implements IUseCase<UpdateCategoryInput, UpdateCategoryOutput>
