@@ -3,7 +3,10 @@ import { NotFoundError } from "../../../../shared/domain/errors/not-found.error"
 import { Uuid } from "../../../../shared/domain/value-objects/uuid.vo";
 import { Category } from "../../../domain/category.entity";
 import { ICategoryRepository } from "../../../domain/category.repository";
-import { CategoryOutput } from "../common/category-output";
+import {
+  CategoryOutput,
+  CategoryOutputMapper,
+} from "../common/category-output";
 
 export type UpdateCategoryInput = {
   id: string;
@@ -38,12 +41,6 @@ export class UpdateCategoryUseCase
 
     await this.categoryRepository.update(category);
 
-    return {
-      category_id: category.category_id.id,
-      name: category.name,
-      description: category.description,
-      is_active: category.is_active,
-      created_at: category.created_at,
-    };
+    return CategoryOutputMapper.toOutput(category);
   }
 }
