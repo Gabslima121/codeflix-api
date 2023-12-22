@@ -23,7 +23,6 @@ export class UpdateCategoryUseCase
     const uuid = new Uuid(input.id);
 
     const category = await this.categoryRepository.findById(uuid);
-    console.log(category);
 
     if (!category) throw new NotFoundError(input.id, Category);
 
