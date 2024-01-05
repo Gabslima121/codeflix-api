@@ -4,6 +4,7 @@ import { SortDirection } from "../../../../shared/domain/repository/search-param
 import {
   CategoryFilter,
   CategorySearchParams,
+  CategorySearchResult,
   ICategoryRepository,
 } from "../../../domain/category.repository";
 import { CategoryOutputMapper } from "../common/category-output";
@@ -28,10 +29,16 @@ export class ListCategoriesUseCase
 
     const searchResult = await this.categoryRepository.search(params);
 
-    const outputItems = searchResult.items.map((item) =>
-      CategoryOutputMapper.toOutput(item)
-    );
+    return this.toOutput(searchResult);
+  }
 
-    return PaginationOutputMapper.toOutput(outputItems, searchResult);
+  private toOutput(searchResult: CategorySearchResult): ListCategoriesOutput {
+    const { items: _items } = searchResult;
+
+    const items = _items.map((item) => {
+      return CategoryOutputMapper.toOutput(item);
+    });
+
+    return PaginationOutputMapper.toOutput(items, searchResult);
   }
 }
