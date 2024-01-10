@@ -15,10 +15,10 @@ export class PaginationOutputMapper {
   ): PaginationOutput<Item> {
     return {
       items,
+      total: props.total,
       current_page: props.current_page,
       last_page: props.last_page,
       per_page: props.per_page,
-      total: props.total,
     };
   }
 }

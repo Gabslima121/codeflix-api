@@ -1,8 +1,7 @@
 import { Sequelize, SequelizeOptions } from "sequelize-typescript";
-
 import { Config } from "../config";
 
-export async function setUpSequelize(options: SequelizeOptions = {}) {
+export function setupSequelize(options: SequelizeOptions = {}) {
   let _sequelize: Sequelize;
 
   beforeAll(async () => {

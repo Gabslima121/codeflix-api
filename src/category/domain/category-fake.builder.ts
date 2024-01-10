@@ -1,38 +1,37 @@
 import { Chance } from "chance";
-
-import { Uuid } from "../../shared/domain/value-objects/uuid.vo";
 import { Category } from "./category.entity";
+import { Uuid } from "../../shared/domain/value-objects/uuid.vo";
 
 type PropOrFactory<T> = T | ((index: number) => T);
 
 export class CategoryFakeBuilder<TBuild = any> {
-  private chance: Chance.Chance;
-
-  private constructor(countObjs: number = 1) {
-    this.countObjs = countObjs;
-
-    this.chance = Chance();
-  }
-
+  // auto generated in entity
   private _category_id: PropOrFactory<Uuid> | undefined = undefined;
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private _name: PropOrFactory<string> = (_index) => this.chance.word();
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private _description: PropOrFactory<string | null> = (_index) =>
     this.chance.paragraph();
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private _is_active: PropOrFactory<boolean> = (_index) => true;
-
+  // auto generated in entity
   private _created_at: PropOrFactory<Date> | undefined = undefined;
 
   private countObjs;
 
   static aCategory() {
-    return new CategoryFakeBuilder();
+    return new CategoryFakeBuilder<Category>();
   }
 
   static theCategories(countObjs: number) {
     return new CategoryFakeBuilder<Category[]>(countObjs);
+  }
+
+  private chance: Chance.Chance;
+
+  private constructor(countObjs: number = 1) {
+    this.countObjs = countObjs;
+    this.chance = Chance();
   }
 
   withUuid(valueOrFactory: PropOrFactory<Uuid>) {
@@ -67,25 +66,28 @@ export class CategoryFakeBuilder<TBuild = any> {
 
   withInvalidNameTooLong(value?: string) {
     this._name = value ?? this.chance.word({ length: 256 });
+    return this;
   }
 
-  private callFactory(factoryOrValue: PropOrFactory<any>, index: number) {
-    return typeof factoryOrValue === "function"
-      ? factoryOrValue(index)
-      : factoryOrValue;
-  }
-
-  private getValue(prop: any) {
-    const optional = ["category_id", "created_at"];
-    const privateProp = `_${prop}` as keyof this;
-
-    if (!this[privateProp] && optional.includes(prop)) {
-      throw new Error(
-        `Property ${prop} not have a factory, use 'with' methods`
-      );
-    }
-
-    return this.callFactory(this[privateProp], 0);
+  build(): TBuild {
+    const categories = new Array(this.countObjs)
+      .fill(undefined)
+      .map((_, index) => {
+        const category = new Category({
+          category_id: !this._category_id
+            ? undefined
+            : this.callFactory(this._category_id, index),
+          name: this.callFactory(this._name, index),
+          description: this.callFactory(this._description, index),
+          is_active: this.callFactory(this._is_active, index),
+          ...(this._created_at && {
+            created_at: this.callFactory(this._created_at, index),
+          }),
+        });
+        category.validate();
+        return category;
+      });
+    return this.countObjs === 1 ? (categories[0] as any) : categories;
   }
 
   get category_id() {
@@ -108,26 +110,20 @@ export class CategoryFakeBuilder<TBuild = any> {
     return this.getValue("created_at");
   }
 
-  build(): TBuild {
-    const categories = new Array(this.countObjs)
-      .fill(undefined)
-      .map((_, index) => {
-        const category = new Category({
-          category_id: !this._category_id
-            ? undefined
-            : this.callFactory(this._category_id, index),
-          name: this.callFactory(this._name, index),
-          description: this.callFactory(this._description, index),
-          is_active: this.callFactory(this._is_active, index),
-          ...(this._created_at && {
-            created_at: this.callFactory(this._created_at, index),
-          }),
-        });
+  private getValue(prop: any) {
+    const optional = ["category_id", "created_at"];
+    const privateProp = `_${prop}` as keyof this;
+    if (!this[privateProp] && optional.includes(prop)) {
+      throw new Error(
+        `Property ${prop} not have a factory, use 'with' methods`
+      );
+    }
+    return this.callFactory(this[privateProp], 0);
+  }
 
-        // category.validate(category);
-        return category;
-      });
-
-    return this.countObjs === 1 ? (categories[0] as any) : categories;
+  private callFactory(factoryOrValue: PropOrFactory<any>, index: number) {
+    return typeof factoryOrValue === "function"
+      ? factoryOrValue(index)
+      : factoryOrValue;
   }
 }

@@ -1,7 +1,7 @@
 import {
-  Model,
   Column,
   DataType,
+  Model,
   PrimaryKey,
   Table,
 } from "sequelize-typescript";
@@ -20,11 +20,11 @@ export class CategoryModel extends Model<CategoryModelProps> {
   @Column({ type: DataType.UUID })
   declare category_id: string;
 
-  @Column({ allowNull: false, type: DataType.STRING(225) })
+  @Column({ allowNull: false, type: DataType.STRING(255) })
   declare name: string;
 
   @Column({ allowNull: true, type: DataType.TEXT })
-  declare description?: string | null;
+  declare description: string | null;
 
   @Column({ allowNull: false, type: DataType.BOOLEAN })
   declare is_active: boolean;
