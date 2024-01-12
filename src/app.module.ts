@@ -5,18 +5,10 @@ import { CategoryModel } from '@core/category/infra/db/sequelize/category.model'
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CategoriesModule } from './categories/categories.module';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
-  imports: [
-    SequelizeModule.forRoot({
-      dialect: 'sqlite',
-      host: ':memory:',
-      logging: false,
-      models: [CategoryModel],
-    }),
-    SequelizeModule.forFeature(),
-    CategoriesModule,
-  ],
+  imports: [DatabaseModule, CategoriesModule],
   controllers: [AppController],
   providers: [AppService],
 })
