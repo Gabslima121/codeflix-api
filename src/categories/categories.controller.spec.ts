@@ -4,7 +4,6 @@ import { CategoriesController } from './categories.controller';
 import { DatabaseModule } from '../database/database.module';
 import { CategoriesModule } from './categories.module';
 import { ConfigModule } from '../config/config.module';
-import { ConfigService } from '@nestjs/config';
 
 describe('CategoriesController', () => {
   let controller: CategoriesController;
@@ -18,7 +17,6 @@ describe('CategoriesController', () => {
   });
 
   it('should be defined', () => {
-    console.log(controller);
     expect(controller).toBeDefined();
   });
 });
