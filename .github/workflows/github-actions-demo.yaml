@@ -5,12 +5,12 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - name: Installing dependencies
       - run: echo "Installing dependencies"
+      - name: Installing dependencies
       - run: npm install
-      - name: Running tests
       - run: echo "Running tests"
+      - name: Running tests
       - run: npm run test:cov
-      - name: Building App
       - run: echo "Building App"
+      - name: Building App
       - run: npm run build
