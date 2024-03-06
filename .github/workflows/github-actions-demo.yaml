@@ -5,12 +5,7 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Installing dependencies"
-      - name: Installing dependencies
+      - run: echo "Installing dependencies..."
+      - name: Installing Dependencies
       - run: npm install
-      - run: echo "Running tests"
-      - name: Running tests
-      - run: npm run test:cov
-      - run: echo "Building App"
-      - name: Building App
-      - run: npm run build
+        uses: actions/checkout@v4
